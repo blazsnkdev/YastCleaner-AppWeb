@@ -1,21 +1,115 @@
+using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+        options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme; // <-- ESTA LÍNEA ES CLAVE
+    })
+    .AddCookie()
+    .AddOpenIdConnect("Auth0", options =>
+    {
+        options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
+        options.ClientId = builder.Configuration["Auth0:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Auth0:ClientSecret"]!;
+        options.ResponseType = "code";
+        options.CallbackPath = new PathString("/callback");
+        options.SaveTokens = true;
+        options.ClaimsIssuer = "Auth0";
+
+        // Agregamos los scopes básicos
+        options.Scope.Clear();
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("email");
+
+        // Mapeo para roles personalizados
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = "name",
+            RoleClaimType = "https://miapp.com/roles"
+        };
+
+        options.Events = new OpenIdConnectEvents
+        {
+            OnTokenValidated = context =>
+            {
+                var identity = (ClaimsIdentity)context.Principal.Identity!;
+                var roleClaims = context.Principal.FindAll("https://miapp.com/roles").ToList();
+
+                foreach (var role in roleClaims)
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Role, role.Value));
+                }
+
+                return Task.CompletedTask;
+            }
+        };
+
+
+
+    });
+
+builder.Services.Configure<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+    options.LoginPath = "/Home/AccesoDenegado";      // si no ha iniciado sesión
+    options.AccessDeniedPath = "/Home/AccesoDenegado"; // si inició sesión pero no tiene rol
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
