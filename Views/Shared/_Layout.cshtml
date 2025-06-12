@@ -1,47 +1,395 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - YAST_CLENAER_WEB</title>
+    <title>@ViewData["Title"] - YAST Cleaner</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/YAST_CLENAER_WEB.styles.css" asp-append-version="true" />
+    <style>
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #1e3d72;
+            --accent-color: #4a90e2;
+            --light-blue: #e8f4fd;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+
+        .navbar-custom {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+            text-decoration: none;
+        }
+
+            .navbar-brand:hover {
+                color: var(--light-blue) !important;
+            }
+
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            padding: 0.75rem 1rem !important;
+            border-radius: 6px;
+            margin: 0 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: white !important;
+                background-color: rgba(255,255,255,0.1);
+                transform: translateY(-1px);
+            }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            min-width: 280px;
+        }
+
+        .dropdown-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: -0.5rem 0 0.5rem 0;
+            border-radius: 12px 12px 0 0;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: var(--light-blue);
+                color: var(--primary-color);
+            }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .main-content {
+            min-height: calc(100vh - 200px);
+            padding: 2rem 0;
+        }
+
+        .footer-custom {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #1a2f5c 100%);
+            color: white;
+            padding: 3rem 0 1.5rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-section h5 {
+            color: var(--light-blue);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+            .footer-section ul li {
+                margin-bottom: 0.75rem;
+            }
+
+                .footer-section ul li a {
+                    color: rgba(255,255,255,0.8);
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+                }
+
+                    .footer-section ul li a:hover {
+                        color: var(--light-blue);
+                    }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .social-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.5rem;
+            margin: 0 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+            .social-links a:hover {
+                color: var(--light-blue);
+                transform: translateY(-2px);
+            }
+
+        .navbar-toggler {
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 0.75rem;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">YAST_CLENAER_WEB</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand company-info" asp-area="" asp-controller="Home" asp-action="Index">
+                    <div class="company-logo">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <span>YAST Cleaner</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-home me-2"></i>Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Orders" asp-action="Index">
+                                    <i class="fas fa-list-alt me-2"></i>Órdenes
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Customers" asp-action="Index">
+                                    <i class="fas fa-users me-2"></i>Clientes
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown"
+                                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="user-avatar">
+                                        @User.Identity.Name?.Substring(0, 1).ToUpper()
+                                    </div>
+                                    <span class="d-none d-md-inline">@User.Identity.Name</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <div class="dropdown-header">
+                                        <i class="fas fa-user me-2"></i>
+                                        <strong>@User.Identity.Name</strong>
+                                        <br>
+                                        <small class="opacity-75">Usuario del sistema</small>
+                                    </div>
+
+                                    @{
+                                        var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value);
+                                    }
+
+                                    @if (roles.Any())
+                                    {
+                                        <div class="px-3 py-2">
+                                            <small class="fw-bold text-uppercase text-muted d-block mb-2">
+                                                <i class="fas fa-shield-alt me-1"></i>Roles asignados:
+                                            </small>
+                                            @foreach (var role in roles)
+                                            {
+                                                <span class="badge bg-primary me-1 mb-1">@role</span>
+                                            }
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                    }
+
+                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Index">
+                                        <i class="fas fa-user-cog me-2"></i>Mi Perfil
+                                    </a>
+                                    <a class="dropdown-item" asp-controller="Settings" asp-action="Index">
+                                        <i class="fas fa-cog me-2"></i>Configuración
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" asp-controller="Auth" asp-action="Logout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Auth" asp-action="Login">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="container-fluid">
+        <main role="main" class="main-content">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-custom">
         <div class="container">
-            &copy; 2025 - YAST_CLENAER_WEB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <div class="company-info mb-3">
+                            <div class="company-logo me-3">
+                                <i class="fas fa-tshirt"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">YAST Cleaner</h5>
+                                <p class="mb-0 text-light opacity-75">Servicio profesional de lavandería</p>
+                            </div>
+                        </div>
+                        <p class="text-light opacity-75">
+                            Brindamos servicios de lavandería de alta calidad con tecnología moderna
+                            y atención personalizada para cada cliente.
+                        </p>
+                        <div class="social-links mt-3">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5><i class="fas fa-sitemap me-2"></i>Navegación</h5>
+                        <ul>
+                            <li><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+                            <li><a asp-controller="Services" asp-action="Index">Servicios</a></li>
+                            <li><a asp-controller="Orders" asp-action="Index">Órdenes</a></li>
+                            <li><a asp-controller="Customers" asp-action="Index">Clientes</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5><i class="fas fa-concierge-bell me-2"></i>Servicios</h5>
+                        <ul>
+                            <li><span class="text-light opacity-75">Lavado en seco</span></li>
+                            <li><span class="text-light opacity-75">Lavado húmedo</span></li>
+                            <li><span class="text-light opacity-75">Planchado</span></li>
+                            <li><span class="text-light opacity-75">Tintorería</span></li>
+                            <li><span class="text-light opacity-75">Servicio express</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5><i class="fas fa-map-marker-alt me-2"></i>Contacto</h5>
+                        <ul>
+                            <li>
+                                <i class="fas fa-phone me-2"></i>
+                                <a href="tel:+1234567890">+1 (234) 567-8900</a>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope me-2"></i>
+                                <a href="mailto:info@yastcleaner.com">info@yastcleaner.com</a>
+                            </li>
+                            <li>
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <span class="text-light opacity-75">123 Calle Principal, Ciudad</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock me-2"></i>
+                                <span class="text-light opacity-75">Lun-Vie: 7:00 AM - 7:00 PM</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0">
+                            &copy; 2025 YAST Cleaner. Todos los derechos reservados.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none me-3">
+                            Política de Privacidad
+                        </a>
+                        <a asp-controller="Home" asp-action="Terms" class="text-decoration-none">
+                            Términos de Servicio
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

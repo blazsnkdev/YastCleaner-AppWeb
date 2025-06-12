@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YAST_CLENAER_WEB.Models;
 
@@ -18,6 +19,7 @@ namespace YAST_CLENAER_WEB.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Empleado")]
         public IActionResult Privacy()
         {
             return View();
@@ -28,5 +30,12 @@ namespace YAST_CLENAER_WEB.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult AccesoDenegado()
+        {
+            return View();
+        }
+
+
     }
 }
