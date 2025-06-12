@@ -1,7 +1,10 @@
-﻿namespace YAST_CLENAER_WEB.Models.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace YAST_CLENAER_WEB.Models.Entity
 {
     public class Prenda
     {
+        [Key]
         public int IdPrenda { get; set; }
         public string TipoPrenda { get; set; }
         public string Descripcion { get; set; }

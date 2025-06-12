@@ -1,7 +1,10 @@
-﻿namespace YAST_CLENAER_WEB.Models.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace YAST_CLENAER_WEB.Models.Entity
 {
     public class TipoServicio
     {
+        [Key]
         public int IdTipoServicio { get; set; }
         public string NombreServicio { get; set; }
         public decimal PrecioBase { get; set; }

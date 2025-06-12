@@ -1,11 +1,16 @@
-﻿namespace YAST_CLENAER_WEB.Models.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace YAST_CLENAER_WEB.Models.Entity
 {
     public class Cliente
     {
+        [Key]
         public int IdCliente { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Telefono { get; set; }
+
+        [Required, EmailAddress]
         public string Email { get; set; }
         public string Direccion { get; set; }
 
