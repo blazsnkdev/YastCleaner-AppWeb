@@ -1,7 +1,10 @@
-﻿namespace YAST_CLENAER_WEB.Models.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace YAST_CLENAER_WEB.Models.Entity
 {
     public class Orden
     {
+        [Key]
         public int IdOrden { get; set; }
         public int IdCliente { get; set; }
         public string IdEmpleadoAuth0 { get; set; }

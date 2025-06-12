@@ -1,13 +1,40 @@
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using YAST_CLENAER_WEB.Data;
+using YAST_CLENAER_WEB.Data.Interfaces;
+using YAST_CLENAER_WEB.Data.Repository;
+using YAST_CLENAER_WEB.Data.UoW;
+using YAST_CLENAER_WEB.Services.Impl;
+using YAST_CLENAER_WEB.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+//BD CONTEXT
+builder.Services.AddDbContext<AppDbContext>
+    (options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("cn1"));
+    });
 
+//REPOSITORIOS
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITipoServicioRepository,TipoServicioRepository>();
+
+
+//SERVICIOS
+builder.Services.AddScoped<ITipoServicioService, TipoServicioService>();
+
+
+
+
+
+//AUTENTICACIÓN, AUTORIZACIÓN Y ROLES AUTH0
 builder.Services
     .AddAuthentication(options =>
     {
@@ -68,17 +95,6 @@ builder.Services.Configure<CookieAuthenticationOptions>(CookieAuthenticationDefa
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -89,19 +105,6 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -118,6 +121,14 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+
+//MIGRACIONES A LA BASE DE DATOS
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 
 app.Run();
