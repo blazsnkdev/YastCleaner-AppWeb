@@ -13,6 +13,8 @@ namespace YAST_CLENAER_WEB.Models.Entity
         [Required, EmailAddress]
         public string Email { get; set; }
         public string Direccion { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public string EstadoCliente { get; set; }
 
         ICollection<Orden> Ordenes { get; set; } = new List<Orden>();
 

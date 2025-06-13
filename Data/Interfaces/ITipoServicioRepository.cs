@@ -6,6 +6,7 @@ namespace YAST_CLENAER_WEB.Data.Interfaces
     {
         Task<IEnumerable<TipoServicio>> GetAllByEstadoActivoAsync();
         Task<IEnumerable<TipoServicio>> GetAllByEstadoDesactivadoAsync();
-        
+        Task UpdateEstadoDesactivadoAsync(int id);
+
     }
 }
