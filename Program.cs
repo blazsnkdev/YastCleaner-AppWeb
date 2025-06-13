@@ -21,14 +21,21 @@ builder.Services.AddDbContext<AppDbContext>
         options.UseSqlServer(builder.Configuration.GetConnectionString("cn1"));
     });
 
+//UNIT OF WORK
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
 //REPOSITORIOS
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ITipoServicioRepository,TipoServicioRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+
 
 
 //SERVICIOS
 builder.Services.AddScoped<ITipoServicioService, TipoServicioService>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
 
 

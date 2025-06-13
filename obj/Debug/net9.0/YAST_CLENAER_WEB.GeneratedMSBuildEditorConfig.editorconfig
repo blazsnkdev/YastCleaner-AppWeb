@@ -28,6 +28,10 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/Cliente/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/Home/AccesoDenegado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc29EZW5lZ2Fkby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -50,6 +54,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/TipoServicio/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1NlcnZpY2lvXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/TipoServicio/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1NlcnZpY2lvXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/TipoServicio/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1NlcnZpY2lvXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/TipoServicio/Index.cshtml]

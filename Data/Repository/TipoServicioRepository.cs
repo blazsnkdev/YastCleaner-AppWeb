@@ -25,5 +25,21 @@ namespace YAST_CLENAER_WEB.Data.Repository
                 .Where(ts => ts.EstadoServicio == "Desactivado")
                 .ToListAsync();
         }
+
+        public async Task UpdateEstadoDesactivadoAsync(int id)
+        {
+            await _appDbcontext.TipoServicios
+                .Where(ts => ts.IdTipoServicio == id)
+                .ExecuteUpdateAsync(ts => ts.SetProperty(t => t.EstadoServicio, "Desactivado"));
+        }
+
+
+
+
+
+
+
+
+
     }
 }

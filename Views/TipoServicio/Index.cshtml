@@ -1,65 +1,55 @@
-﻿@model IEnumerable<YAST_CLENAER_WEB.Models.ViewModels.TipoServicioViewModel>
+﻿@model YAST_CLENAER_WEB.Models.ViewModels.PaginacionViewModel<YAST_CLENAER_WEB.Models.ViewModels.TipoServicioViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista de Tipos de Servicio</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Crear Nuevo</a>
 </p>
+
 <table class="table">
-    <thead>
+    <thead class="table table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTipoServicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreServicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioBase)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoServicio)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Items.First().IdTipoServicio)</th>
+            <th>@Html.DisplayNameFor(model => model.Items.First().NombreServicio)</th>
+            <th>@Html.DisplayNameFor(model => model.Items.First().PrecioBase)</th>
+            <th>@Html.DisplayNameFor(model => model.Items.First().Descripcion)</th>
+            <th>@Html.DisplayNameFor(model => model.Items.First().FechaCreacion)</th>
+            <th>@Html.DisplayNameFor(model => model.Items.First().EstadoServicio)</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTipoServicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreServicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioBase)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoServicio)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.IdTipoServicio</td>
+                <td>@item.NombreServicio</td>
+                <td>@item.PrecioBase</td>
+                <td>@item.Descripcion</td>
+                <td>@item.FechaCreacion.ToShortDateString()</td>
+                <td>@item.EstadoServicio</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.IdTipoServicio" class="btn btn-primary">Detalles</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@if (Model.TotalPaginas > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPaginas; i++)
+            {
+                <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pagina="@i" asp-route-filtroEstado="@Model.FiltroEstado">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

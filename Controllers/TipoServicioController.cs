@@ -15,18 +15,59 @@ namespace YAST_CLENAER_WEB.Controllers
         {
             _service = service;
         }
-
         [Route("tipoServicio/lista")]
-        public async Task<IActionResult> Index(string? filtroEstado)
+        public async Task<IActionResult> Index(string? filtroEstado, int pagina = 1)
         {
-            var lista = await _service.GetAllTipoServicioAsyncByEstado(filtroEstado);
-            return View(lista);
+            int tamañoPagina = 5;
+
+            var totalItems = await _service.ContarTotalTipoServiciosAsync(filtroEstado);
+            var items = await _service.GetTipoServicioPaginadoAsync(filtroEstado, pagina, tamañoPagina);
+
+            var viewModel = new PaginacionViewModel<TipoServicioViewModel>
+            {
+                Items = items,
+                PaginaActual = pagina,
+                TotalPaginas = (int)Math.Ceiling((double)totalItems / tamañoPagina),
+                FiltroEstado = filtroEstado
+            };
+
+            return View(viewModel);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = await _service.GetTipoServicioByIdAsync(id);
+            if (model == null)
+            {
+                TempData["ErrorMessage"] = "El servicio no existe.";
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Desactivar(int id)
+        {
+            try
+            {
+                await _service.DesactivarEstadoAsync(id);
+                TempData["SuccessMessage"] = "El servicio se ha desactivado correctamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error: {ex}";
+            }
+            return RedirectToAction("Index");
+        }
+
+
 
         public IActionResult Create()
         {
             return View();
         }
+
+
         [HttpPost]
         public async Task<IActionResult> Create(TipoServicioViewModel model)
         {
@@ -43,7 +84,34 @@ namespace YAST_CLENAER_WEB.Controllers
 
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await _service.GetTipoServicioByIdAsync(id);
+            if (model == null)
+            {
+                TempData["ErrorMessage"] = "El servicio no existe.";
+                return RedirectToAction("Index");
+            }
+            return View(model);
 
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(TipoServicioViewModel model)
+        {
+            try
+            {
+                await _service.UpdateTipoServicioAsync(model);
+                TempData["SuccessMessage"] = "El servicio se ha actualizado correctamente.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error: {ex}";
+                return View(model);
+            }
+        }
 
 
 

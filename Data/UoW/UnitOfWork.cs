@@ -6,10 +6,13 @@ namespace YAST_CLENAER_WEB.Data.UoW
     public class UnitOfWork : IUnitOfWork
     {
 
-        //REPOSITORIOS
+        //REPOSITORIOS GENERICO
         public IRepository<TipoServicio> TipoServicio { get; }
-        public ITipoServicioRepository TipoServicioRepository { get;}
+        public IRepository<Cliente> Cliente { get; }
 
+        //REPOSITORIO ESPECIFICO
+        public ITipoServicioRepository TipoServicioRepository { get;}
+        public IClienteRepository ClienteRepository { get; }
 
 
         //CONTEXT
@@ -17,12 +20,17 @@ namespace YAST_CLENAER_WEB.Data.UoW
         //CONSTRUCTOR
         public UnitOfWork(AppDbContext appDbContext,
             IRepository<TipoServicio> tipoServicio,
-            ITipoServicioRepository tipoServicioRepository)
+            ITipoServicioRepository tipoServicioRepository,
+            IRepository<Cliente> cliente,
+            IClienteRepository clienteRepository)
         {
             _appDbcontext = appDbContext;
             TipoServicio = tipoServicio;
             TipoServicioRepository = tipoServicioRepository;
+            Cliente = cliente;
+            ClienteRepository = clienteRepository;
         }
+
         //GUARDAR EN LA BD LOS CAMBIOS DE MEMORIA
         public async Task<int> SaveChangesAsync()
         {
