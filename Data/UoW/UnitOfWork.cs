@@ -9,10 +9,14 @@ namespace YAST_CLENAER_WEB.Data.UoW
         //REPOSITORIOS GENERICO
         public IRepository<TipoServicio> TipoServicio { get; }
         public IRepository<Cliente> Cliente { get; }
+        public IRepository<Prenda> Prenda { get; }
+
 
         //REPOSITORIO ESPECIFICO
         public ITipoServicioRepository TipoServicioRepository { get;}
         public IClienteRepository ClienteRepository { get; }
+        public IPrendaRepository PrendaRepository { get; }
+
 
 
         //CONTEXT
@@ -22,13 +26,19 @@ namespace YAST_CLENAER_WEB.Data.UoW
             IRepository<TipoServicio> tipoServicio,
             ITipoServicioRepository tipoServicioRepository,
             IRepository<Cliente> cliente,
-            IClienteRepository clienteRepository)
+            IClienteRepository clienteRepository,
+            IRepository<Prenda> prenda,
+            IPrendaRepository prendaRepository
+            )
         {
             _appDbcontext = appDbContext;
             TipoServicio = tipoServicio;
             TipoServicioRepository = tipoServicioRepository;
             Cliente = cliente;
             ClienteRepository = clienteRepository;
+            Prenda = prenda;
+            PrendaRepository = prendaRepository;
+
         }
 
         //GUARDAR EN LA BD LOS CAMBIOS DE MEMORIA

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("YAST_CLENAER_WEB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0076f7ea9aa142b59b338ee273a8ae1cf9cb896")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ffb97149d5e68bc25efef46f191b143157fc416")]
 [assembly: System.Reflection.AssemblyProductAttribute("YAST_CLENAER_WEB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("YAST_CLENAER_WEB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

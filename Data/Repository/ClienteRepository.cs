@@ -11,6 +11,14 @@ namespace YAST_CLENAER_WEB.Data.Repository
         {
             _appDbcontext = appDbcontext;
         }
+
+        public Task UpdateEstadoDesactivadoAsync(int id)
+        {
+            return _appDbcontext.Clientes
+                .Where(c => c.IdCliente == id)
+                .ExecuteUpdateAsync(c => c.SetProperty(c => c.EstadoCliente, "Desactivado"));
+        }
+
         public async Task<IEnumerable<Cliente>> GetAllClientesByEstadoActivoAsync()
         {
             return await _appDbcontext.Clientes

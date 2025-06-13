@@ -1,0 +1,62 @@
+﻿@model YAST_CLENAER_WEB.Models.ViewModels.PrendaViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PrendaViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdPrenda)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdPrenda)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoPrenda)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TipoPrenda)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EstadoPrenda)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EstadoPrenda)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="btn btn-dark" asp-route-id="@Model.IdPrenda">Editar</a>
+    <a asp-action="Index">Back to List</a>
+
+    @if(Model.EstadoPrenda == "Activo")
+    {
+        <form asp-action="Desactivar" asp-route-id="@Model.IdPrenda" method="post">
+            <button type="submit" class="btn btn-dark">Desactivar</button> |
+        </form>
+    }
+    else
+    {
+        <form asp-action="Activar" asp-route-id="@Model.IdPrenda" method="post">
+            <button type="submit" class="btn btn-dark">Activar</button> |
+        </form>
+    }
+
+</div>

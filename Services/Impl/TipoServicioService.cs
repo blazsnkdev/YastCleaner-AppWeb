@@ -26,7 +26,7 @@ namespace YAST_CLENAER_WEB.Services.Impl
                 FechaCreacion = model.FechaCreacion,
                 EstadoServicio = model.EstadoServicio
             };
-            await _unitOfWork.TipoServicioRepository.AddAsync(tipoServicio);
+            await _unitOfWork.TipoServicio.AddAsync(tipoServicio);
             await _unitOfWork.SaveChangesAsync();
         }
 

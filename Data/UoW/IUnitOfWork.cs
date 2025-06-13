@@ -5,13 +5,21 @@ namespace YAST_CLENAER_WEB.Data.UoW
 {
     public interface IUnitOfWork
     {
-
+        //REPOSITORIOS GENERICOS
         IRepository<TipoServicio> TipoServicio { get; }
         IRepository<Cliente> Cliente { get; }
+        IRepository<Prenda> Prenda { get; }
 
+
+        //REPOSITORIOS ESPECIFICOS
         IClienteRepository ClienteRepository { get; }
         ITipoServicioRepository TipoServicioRepository { get; }
+        IPrendaRepository PrendaRepository { get; }
 
+
+
+
+        //GUARDAR EN LA BD DE LA MEMORIA
         Task<int> SaveChangesAsync();
 
     }

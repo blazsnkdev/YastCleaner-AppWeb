@@ -1,0 +1,58 @@
+﻿@model YAST_CLENAER_WEB.Models.ViewModels.PaginacionViewModel<YAST_CLENAER_WEB.Models.ViewModels.PrendaViewModel>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Tipo de Prenda
+            </th>
+            <th>
+                Descripción
+            </th>
+            <th>
+                Fecha de Registro
+            </th>
+            <th>
+                Estado
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPrenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoPrenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoPrenda)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.IdPrenda" class="btn btn-dark">Acciones</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

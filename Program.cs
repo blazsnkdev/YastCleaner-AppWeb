@@ -22,7 +22,6 @@ builder.Services.AddDbContext<AppDbContext>
     });
 
 //UNIT OF WORK
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -30,12 +29,15 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ITipoServicioRepository,TipoServicioRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IPrendaRepository, PrendaRepository>();
+
 
 
 
 //SERVICIOS
 builder.Services.AddScoped<ITipoServicioService, TipoServicioService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IPrendaService, PrendaService>();
 
 
 
@@ -43,15 +45,13 @@ builder.Services.AddScoped<IClienteService, ClienteService>();
 
 //AUTENTICACIÓN, AUTORIZACIÓN Y ROLES AUTH0
 builder.Services
-    .AddAuthentication(options =>
-    {
+    .AddAuthentication(options =>{
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-        options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme; // <-- ESTA LÍNEA ES CLAVE
+        options.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme; 
     })
     .AddCookie()
-    .AddOpenIdConnect("Auth0", options =>
-    {
+    .AddOpenIdConnect("Auth0", options =>{
         options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
         options.ClientId = builder.Configuration["Auth0:ClientId"]!;
         options.ClientSecret = builder.Configuration["Auth0:ClientSecret"]!;
@@ -59,22 +59,18 @@ builder.Services
         options.CallbackPath = new PathString("/callback");
         options.SaveTokens = true;
         options.ClaimsIssuer = "Auth0";
-
-        // Agregamos los scopes básicos
+        
         options.Scope.Clear();
         options.Scope.Add("openid");
         options.Scope.Add("profile");
         options.Scope.Add("email");
-
-        // Mapeo para roles personalizados
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
+        
+        options.TokenValidationParameters = new TokenValidationParameters{
             NameClaimType = "name",
             RoleClaimType = "https://miapp.com/roles"
         };
 
-        options.Events = new OpenIdConnectEvents
-        {
+        options.Events = new OpenIdConnectEvents{
             OnTokenValidated = context =>
             {
                 var identity = (ClaimsIdentity)context.Principal.Identity!;
@@ -88,9 +84,6 @@ builder.Services
                 return Task.CompletedTask;
             }
         };
-
-
-
     });
 
 builder.Services.Configure<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme, options =>
