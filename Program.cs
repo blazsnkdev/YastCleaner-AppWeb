@@ -38,6 +38,7 @@ builder.Services.AddScoped<IPrendaRepository, PrendaRepository>();
 builder.Services.AddScoped<ITipoServicioService, TipoServicioService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IPrendaService, PrendaService>();
+builder.Services.AddScoped<IEstadoOrdenService, EstadoOrdenService>();
 
 
 

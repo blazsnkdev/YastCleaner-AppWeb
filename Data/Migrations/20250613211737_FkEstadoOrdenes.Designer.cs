@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YAST_CLENAER_WEB.Data;
 
@@ -11,9 +12,11 @@ using YAST_CLENAER_WEB.Data;
 namespace YAST_CLENAER_WEB.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250613211737_FkEstadoOrdenes")]
+    partial class FkEstadoOrdenes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,19 +89,28 @@ namespace YAST_CLENAER_WEB.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrdenIdOrden")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("PrendaIdPrenda")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("TipoServicioIdTipoServicio")
+                        .HasColumnType("int");
+
                     b.HasKey("IdDetalleOrden");
 
-                    b.HasIndex("IdOrden");
+                    b.HasIndex("OrdenIdOrden");
 
-                    b.HasIndex("IdPrenda");
+                    b.HasIndex("PrendaIdPrenda");
 
-                    b.HasIndex("IdTipoServicio");
+                    b.HasIndex("TipoServicioIdTipoServicio");
 
                     b.ToTable("DetalleOrdenes");
                 });
@@ -226,19 +238,20 @@ namespace YAST_CLENAER_WEB.Data.Migrations
                 {
                     b.HasOne("YAST_CLENAER_WEB.Models.Entity.Orden", "Orden")
                         .WithMany("DetallesOrden")
-                        .HasForeignKey("IdOrden")
+                        .HasForeignKey("OrdenIdOrden")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("YAST_CLENAER_WEB.Models.Entity.Prenda", "Prenda")
                         .WithMany("DetallesOrden")
-                        .HasForeignKey("IdPrenda")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("PrendaIdPrenda")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("YAST_CLENAER_WEB.Models.Entity.TipoServicio", "TipoServicio")
                         .WithMany("DetallesOrden")
-                        .HasForeignKey("IdTipoServicio")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("TipoServicioIdTipoServicio")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Orden");

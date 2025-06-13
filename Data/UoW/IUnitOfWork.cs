@@ -9,6 +9,7 @@ namespace YAST_CLENAER_WEB.Data.UoW
         IRepository<TipoServicio> TipoServicio { get; }
         IRepository<Cliente> Cliente { get; }
         IRepository<Prenda> Prenda { get; }
+        IRepository<EstadoOrden> EstadoOrden { get; }
 
 
         //REPOSITORIOS ESPECIFICOS

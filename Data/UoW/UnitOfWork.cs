@@ -10,6 +10,7 @@ namespace YAST_CLENAER_WEB.Data.UoW
         public IRepository<TipoServicio> TipoServicio { get; }
         public IRepository<Cliente> Cliente { get; }
         public IRepository<Prenda> Prenda { get; }
+        public IRepository<EstadoOrden> EstadoOrden { get; }
 
 
         //REPOSITORIO ESPECIFICO
@@ -28,7 +29,8 @@ namespace YAST_CLENAER_WEB.Data.UoW
             IRepository<Cliente> cliente,
             IClienteRepository clienteRepository,
             IRepository<Prenda> prenda,
-            IPrendaRepository prendaRepository
+            IPrendaRepository prendaRepository,
+            IRepository<EstadoOrden> estadoOrden
             )
         {
             _appDbcontext = appDbContext;
@@ -38,6 +40,7 @@ namespace YAST_CLENAER_WEB.Data.UoW
             ClienteRepository = clienteRepository;
             Prenda = prenda;
             PrendaRepository = prendaRepository;
+            EstadoOrden = estadoOrden;
 
         }
 

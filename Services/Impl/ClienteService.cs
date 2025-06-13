@@ -45,13 +45,13 @@ namespace YAST_CLENAER_WEB.Services.Impl
             
         }
 
-        public async Task<List<ClienteViewModel>> GetAllClientesPaginaByEstadoAsync(string? estado, int pagina, int tamañoPagina)
+        public async Task<List<ClienteViewModel>> GetAllClientesPaginaByEstadoAsync(string? estado, int pagina, int tamanioPagina)
         {
             var clientes = await _unitOfWork.ClienteRepository.GetAllClientesByEstadoActivoAsync();
 
             var clienteViewModels = clientes
-                .Skip((pagina - 1) * tamañoPagina)
-                .Take(tamañoPagina)
+                .Skip((pagina - 1) * tamanioPagina)
+                .Take(tamanioPagina)
                 .Select(c => new ClienteViewModel
             {
                 IdCliente = c.IdCliente,

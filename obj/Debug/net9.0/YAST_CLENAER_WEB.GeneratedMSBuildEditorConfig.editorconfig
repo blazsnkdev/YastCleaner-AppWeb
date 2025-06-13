@@ -44,6 +44,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/EstadoOrden/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXN0YWRvT3JkZW5cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/EstadoOrden/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXN0YWRvT3JkZW5cRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/EstadoOrden/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXN0YWRvT3JkZW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/EstadoOrden/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXN0YWRvT3JkZW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/blas/proyectos/yastCleaner/YAST_CLENAER_WEB/YAST_CLENAER_WEB/Views/Home/AccesoDenegado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc29EZW5lZ2Fkby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

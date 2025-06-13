@@ -4,7 +4,7 @@ namespace YAST_CLENAER_WEB.Services.Interfaces
 {
     public interface IClienteService
     {
-        Task<List<ClienteViewModel>> GetAllClientesPaginaByEstadoAsync(string? estado, int pagina, int tamañoPagina);
+        Task<List<ClienteViewModel>> GetAllClientesPaginaByEstadoAsync(string? estado, int pagina, int tamanioPagina);
 
         Task<int> ContarTotalClientesAsync(string? estado);
 

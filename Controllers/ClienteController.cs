@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using YAST_CLENAER_WEB.Models.ViewModels;
 using YAST_CLENAER_WEB.Services.Interfaces;
 
@@ -15,11 +16,11 @@ namespace YAST_CLENAER_WEB.Controllers
             _service = service;
         }
 
-        public IActionResult Index(string? filtroEstado, int pagina = 1)
+        public async Task<IActionResult> Index(string? filtroEstado, int pagina = 1)
         {
             int tamañoPagina = 5;
-            var clientes = _service.GetAllClientesPaginaByEstadoAsync(filtroEstado, pagina, tamañoPagina).Result;
-            var totalItems = _service.ContarTotalClientesAsync(filtroEstado).Result;
+            var clientes = await _service.GetAllClientesPaginaByEstadoAsync(filtroEstado, pagina, tamañoPagina);
+            var totalItems = await _service.ContarTotalClientesAsync(filtroEstado);
 
             var viewModel = new PaginacionViewModel<ClienteViewModel>
             {

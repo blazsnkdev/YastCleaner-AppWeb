@@ -16,7 +16,7 @@ namespace YAST_CLENAER_WEB.Models.Entity
         public DateTime FechaRegistro { get; set; }
         public string EstadoCliente { get; set; }
 
-        ICollection<Orden> Ordenes { get; set; } = new List<Orden>();
+        public ICollection<Orden> Ordenes { get; set; } = new List<Orden>();
 
     }
 }

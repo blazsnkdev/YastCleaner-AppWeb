@@ -1,0 +1,39 @@
+﻿@model YAST_CLENAER_WEB.Models.ViewModels.PaginacionViewModel<YAST_CLENAER_WEB.Models.ViewModels.EstadoOrdenViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoOrden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreEstado)
+            </td>
+            <td>
+                <a asp-action="Details" class="btn btn-dark" asp-route-id="@item.IdEstadoOrden">Acciones</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
